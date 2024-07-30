@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXquisite - Menu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="https://i.imgur.com/uYrWLAD.png" alt="eXquisite Logo" class="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu">Menu</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="menu">
+        <h1>Our Menu</h1>
+        <p>Explore our diverse menu featuring delicious dishes made with the finest ingredients. Whether you're in the mood for local favorites or international cuisine, we have something for everyone.</p>
+        <div class="menu-list">
+            <!-- Existing menu items -->
+            <h2>Soups</h2>
+            <div class="menu-item">
+                <h3>Afang Soup</h3>
+                <p>5L = 25k | 3L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Banga Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Fisherman Soup</h3>
+                <p>5L = 35k | 3L = 30k | 2L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Egusi Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Ogbono Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Bitter Leaf Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Native Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Seafood Okro</h3>
+                <p>5L = 30k | 3L = 25k | 2L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>White Soup</h3>
+                <p>5L = 25k | 3L = 20k | 2L = 15k</p>
+            </div>
+
+            <h2>Stew Dishes</h2>
+            <div class="menu-item">
+                <h3>Assorted Meat Stew</h3>
+                <p>5L = 28k | 3L = 24k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Goat Meat Stew</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Chicken Stew</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Turkey Stew</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Catfish Stew</h3>
+                <p>5L = 25k | 3L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Gizzard Stew</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Stockfish Stew</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Exquisite Special Sauce</h3>
+                <p>5L = 35k | 3L = 30k</p>
+            </div>
+
+            <h2>Peppersoup</h2>
+            <div class="menu-item">
+                <h3>Tilapia Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k | 2L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Assorted Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k | 2L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Cowtail Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k | 2L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Goat Meat Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k | 2L = 20k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Croaker Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Seafood Peppersoup</h3>
+                <p>5L = 35k | 3L = 29k</p>
+            </div>
+            <div class="menu-item">
+                <h3>Dry Fish Peppersoup</h3>
+                <p>5L = 30k | 3L = 25k</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order">
+        <h1>Place Your Order</h1>
+        <form id="orderForm" action="/processOrder" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required></textarea>
+            
+            <label for="menuItem">Select Menu Item:</label>
+            <select id="menuItem" name="menuItem">
+                <option value="Afang Soup 5L">Afang Soup 5L - 25k</option>
+                <option value="Banga Soup 5L">Banga Soup 5L - 25k</option>
+                <option value="Fisherman Soup 5L">Fisherman Soup 5L - 35k</option>
+                <!-- Add more options as needed -->
+            </select>
+            
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+            
+            <label for="payment">Payment Method:</label>
+            <select id="payment" name="paymentMethod" required>
+                <option value="card">Credit/Debit Card</option>
+            </select>
+            
+            <button type="submit">Place Order</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 eXquisite. All rights reserved.</p>
+        <p>eXquisite is registered with the Corporate Affairs Commission (CAC) of Nigeria. CAC Number: Exquisite BN: 3145838</p>
+    </footer>
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const stripe = Stripe('YOUR_PUBLIC_STRIPE_KEY');
+        
+        const orderForm = document.getElementById('orderForm');
+        orderForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const {token, error} = await stripe.createToken();
+            if (error) {
+                console.error(error);
+                alert('Payment error. Please try again.');
+            } else {
+                // Submit the form with the token
+                const formData = new FormData(orderForm);
+                formData.append('stripeToken', token.id);
+                
+                fetch('/processOrder', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          alert('Order placed successfully!');
+                      } else {
+                          alert('Order failed. Please try again.');
+                      }
+                  });
+            }
+        });
+    });
+    </script>
+</body>
+</html>
