@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXquisite - Order Now</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Function to update size options based on selected food item
+        function updateSizeOptions() {
+            var item = document.getElementById("menu-item").value;
+            var size = document.getElementById("size");
+            size.innerHTML = ""; // Clear previous options
+
+            var options = [];
+            if (item === "Afang Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" }
+                ];
+            } else if (item === "Banga Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Fisherman Soup") {
+                options = [
+                    { value: "5L", text: "5L = 35k" },
+                    { value: "3L", text: "3L = 30k" },
+                    { value: "2L", text: "2L = 25k" }
+                ];
+            } else if (item === "Egusi Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Ogbono Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Bitter Leaf Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Native Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Seafood Okro") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" },
+                    { value: "2L", text: "2L = 20k" }
+                ];
+            } else if (item === "White Soup") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" },
+                    { value: "2L", text: "2L = 15k" }
+                ];
+            } else if (item === "Assorted Meat Stew") {
+                options = [
+                    { value: "5L", text: "5L = 28k" },
+                    { value: "3L", text: "3L = 24k" }
+                ];
+            } else if (item === "Goat Meat Stew") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Chicken Stew") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Turkey Stew") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Catfish Stew") {
+                options = [
+                    { value: "5L", text: "5L = 25k" },
+                    { value: "3L", text: "3L = 20k" }
+                ];
+            } else if (item === "Gizzard Stew") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Stockfish Stew") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Exquisite Special Sauce") {
+                options = [
+                    { value: "5L", text: "5L = 35k" },
+                    { value: "3L", text: "3L = 30k" }
+                ];
+            } else if (item === "Tilapia Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" },
+                    { value: "2L", text: "2L = 20k" }
+                ];
+            } else if (item === "Assorted Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" },
+                    { value: "2L", text: "2L = 20k" }
+                ];
+            } else if (item === "Cowtail Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" },
+                    { value: "2L", text: "2L = 20k" }
+                ];
+            } else if (item === "Goat Meat Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" },
+                    { value: "2L", text: "2L = 20k" }
+                ];
+            } else if (item === "Croaker Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            } else if (item === "Seafood Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 35k" },
+                    { value: "3L", text: "3L = 29k" }
+                ];
+            } else if (item === "Dry Fish Peppersoup") {
+                options = [
+                    { value: "5L", text: "5L = 30k" },
+                    { value: "3L", text: "3L = 25k" }
+                ];
+            }
+
+            // Populate size dropdown with new options
+            options.forEach(function(option) {
+                var newOption = document.createElement("option");
+                newOption.value = option.value;
+                newOption.textContent = option.text;
+                size.appendChild(newOption);
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="https://i.imgur.com/uYrWLAD.png" alt="eXquisite Logo" class="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="order">
+        <h1>Place Your Order</h1>
+        <form action="submit_order.php" method="POST">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            
+            <label for="address">Delivery Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+            
+            <label for="menu-item">Select Menu Item:</label>
+            <select id="menu-item" name="menu-item" onchange="updateSizeOptions()" required>
+                <option value="" disabled selected>Select an item</option>
+                <option value="Afang Soup">Afang Soup</option>
+                <option value="Banga Soup">Banga Soup</option>
+                <option value="Fisherman Soup">Fisherman Soup</option>
+                <option value="Egusi Soup">Egusi Soup</option>
+                <option value="Ogbono Soup">Ogbono Soup</option>
+                <option value="Bitter Leaf Soup">Bitter Leaf Soup</option>
+                <option value="Native Soup">Native Soup</option>
+                <option value="Seafood Okro">Seafood Okro</option>
+                <option value="White Soup">White Soup</option>
+                <option value="Assorted Meat Stew">Assorted Meat Stew</option>
+                <option value="Goat Meat Stew">Goat Meat Stew</option>
+                <option value="Chicken Stew">Chicken Stew</option>
+                <option value="Turkey Stew">Turkey Stew</option>
+                <option value="Catfish Stew">Catfish Stew</option>
+                <option value="Gizzard Stew">Gizzard Stew</option>
+                <option value="Stockfish Stew">Stockfish Stew</option>
+                <option value="Exquisite Special Sauce">Exquisite Special Sauce</option>
+                <option value="Tilapia Peppersoup">Tilapia Peppersoup</option>
+                <option value="Assorted Peppersoup">Assorted Peppersoup</option>
+                <option value="Cowtail Peppersoup">Cowtail Peppersoup</option>
+                <option value="Goat Meat Peppersoup">Goat Meat Peppersoup</option>
+                <option value="Croaker Peppersoup">Croaker Peppersoup</option>
+                <option value="Seafood Peppersoup">Seafood Peppersoup</option>
+                <option value="Dry Fish Peppersoup">Dry Fish Peppersoup</option>
+            </select>
+            
+            <label for="size">Select Size:</label>
+            <select id="size" name="size" required>
+                <option value="" disabled selected>Select a size</option>
+            </select>
+            
+            <fieldset>
+                <legend>Payment Method:</legend>
+                <label>
+                    <input type="radio" name="payment-method" value="card" required>
+                    Credit/Debit Card
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="payment-method" value="bank-transfer" required>
+                    Bank Transfer
+                </label>
+            </fieldset>
+            
+            <button type="submit" class="btn">Submit Order</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 eXquisite. All rights reserved.</p>
+        <p>eXquisite is registered with the Corporate Affairs Commission (CAC) of Nigeria. CAC Number: Exquisite BN: 3145838</p>
+    </footer>
+</body>
+</html>
