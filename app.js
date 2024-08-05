@@ -1,34 +1,53 @@
-// Initialize Telegram Web App
-window.Telegram.WebApp.onEvent('mainButtonClicked', function() {
-    // Handle main button click if needed
-});
+window.Telegram.WebApp.ready();
 
 window.onload = function() {
-    // Get user data from Telegram
     const user = window.Telegram.WebApp.initDataUnsafe;
-    document.getElementById('username').textContent = user.username || "Username";
-    
-    // Example of setting initial points and tasks done
-    let points = 0;
-    let tasksDone = 0;
+    const userId = user?.user?.id;
+    const username = user?.user?.username || "Username";
 
-    // Update points and tasks done
-    document.getElementById('points').textContent = points;
-    document.getElementById('tasksDone').textContent = tasksDone;
+    // Set username
+    document.getElementById('username').textContent = username;
+
+    // Fetch user-specific data
+    fetch(`https://your-server-endpoint.com/data/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const points = data.points || 0;
+            const tasksDone = data.tasksDone || 0;
+
+            document.getElementById('points').textContent = points;
+            document.getElementById('tasksDone').textContent = tasksDone;
+        });
 
     // Handle task completion
     document.querySelectorAll('.complete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const taskId = this.getAttribute('data-task');
-            // Update task status and points
-            if (!document.getElementById(taskId).classList.contains('completed')) {
+            const taskElement = document.getElementById(taskId);
+
+            if (!taskElement.classList.contains('completed')) {
+                // Update task status
+                let points = parseInt(document.getElementById('points').textContent);
+                let tasksDone = parseInt(document.getElementById('tasksDone').textContent);
+
                 points += 10;
                 tasksDone += 1;
-                document.getElementById(taskId).classList.add('completed');
+                taskElement.classList.add('completed');
                 this.textContent = 'Completed';
                 document.getElementById('points').textContent = points;
                 document.getElementById('tasksDone').textContent = tasksDone;
+
+                // Send updated data to server
+                sendDataToServer(userId, points, tasksDone);
             }
         });
     });
 };
+
+function sendDataToServer(userId, points, tasksDone) {
+    fetch('https://your-server-endpoint.com/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, points, tasksDone })
+    });
+}
