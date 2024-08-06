@@ -9,7 +9,7 @@ window.onload = function() {
     document.getElementById('username').textContent = username;
 
     // Fetch user-specific data
-    fetch(`https://your-server-endpoint.com/data/${userId}`)
+    fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
         .then(response => response.json())
         .then(data => {
             const points = data.points || 0;
@@ -45,7 +45,7 @@ window.onload = function() {
 };
 
 function sendDataToServer(userId, points, tasksDone) {
-    fetch('https://your-server-endpoint.com/update', {
+    fetch('https://exquisitev2.urbanson.tech/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, points, tasksDone })
