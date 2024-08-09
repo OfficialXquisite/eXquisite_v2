@@ -8,9 +8,15 @@ window.onload = function() {
 
         const userId = user?.user?.id;
         const username = user?.user?.username || "Username";
+        const firstName = user?.user?.first_name || "";
+        const lastName = user?.user?.last_name || "";
+        const profilePhoto = user?.user?.photo_url || ""; // Note: Update this field if your user data structure has a different name for profile photo
 
         // Display the username
-        document.getElementById('username').textContent = username;
+        document.getElementById('userName').textContent = `${firstName} ${lastName}`;
+        if (profilePhoto) {
+            document.getElementById('profilePic').src = profilePhoto;
+        }
 
         // Fetch user-specific data from your server
         if (userId) {
