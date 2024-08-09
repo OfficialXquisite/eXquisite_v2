@@ -1,8 +1,9 @@
 window.onload = function() {
     // Check if Telegram WebApp is available
     if (window.Telegram && window.Telegram.WebApp) {
-        // Access user information
+        // Initialize the Telegram WebApp
         const user = window.Telegram.WebApp.initDataUnsafe;
+
         console.log('User Data:', user); // Debugging line to check user data
 
         const userId = user?.user?.id;
@@ -12,18 +13,20 @@ window.onload = function() {
         document.getElementById('username').textContent = username;
 
         // Fetch user-specific data from your server
-        fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
-            .then(response => response.json())
-            .then(data => {
-                const points = data.points || 0;
-                const tasksDone = data.tasksDone || 0;
+        if (userId) {
+            fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const points = data.points || 0;
+                    const tasksDone = data.tasksDone || 0;
 
-                document.getElementById('points').textContent = points;
-                document.getElementById('tasksDone').textContent = tasksDone;
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
+                    document.getElementById('points').textContent = points;
+                    document.getElementById('tasksDone').textContent = tasksDone;
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        }
 
         // Handle task completion
         document.querySelectorAll('.complete-btn').forEach(button => {
@@ -44,7 +47,9 @@ window.onload = function() {
                     document.getElementById('tasksDone').textContent = tasksDone;
 
                     // Send updated data to server
-                    sendDataToServer(userId, points, tasksDone);
+                    if (userId) {
+                        sendDataToServer(userId, points, tasksDone);
+                    }
                 }
             });
         });
