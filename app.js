@@ -1,20 +1,20 @@
 window.Telegram.WebApp.ready();
 
 window.onload = function() {
-    // Access user data from Telegram WebApp
+    // Access user information
     const user = window.Telegram.WebApp.initDataUnsafe;
     const userId = user?.user?.id;
     const username = user?.user?.username || "Username";
 
-    // Set username
+    // Display the username
     document.getElementById('username').textContent = username;
 
-    // Fetch user-specific data from the backend
-    fetch(`https://534f-102-90-58-194.ngrok-free.app/api/user_data/${userId}`)
+    // Fetch user-specific data from your server
+    fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
         .then(response => response.json())
         .then(data => {
             const points = data.points || 0;
-            const tasksDone = data.tasks_done || 0; // Adjusted to match the data key
+            const tasksDone = data.tasksDone || 0;
 
             document.getElementById('points').textContent = points;
             document.getElementById('tasksDone').textContent = tasksDone;
@@ -46,15 +46,9 @@ window.onload = function() {
 };
 
 function sendDataToServer(userId, points, tasksDone) {
-    fetch('https://534f-102-90-58-194.ngrok-free.app/api/update_user_data', {
+    fetch('https://exquisitev2.urbanson.tech/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, points, tasksDone })
-    }).then(response => {
-        if (!response.ok) {
-            console.error('Failed to update data:', response.statusText);
-        }
-    }).catch(error => {
-        console.error('Error:', error);
     });
 }
