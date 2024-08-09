@@ -1,48 +1,56 @@
-window.Telegram.WebApp.ready();
-
 window.onload = function() {
-    // Access user information
-    const user = window.Telegram.WebApp.initDataUnsafe;
-    const userId = user?.user?.id;
-    const username = user?.user?.username || "Username";
+    // Check if Telegram WebApp is available
+    if (window.Telegram && window.Telegram.WebApp) {
+        // Access user information
+        const user = window.Telegram.WebApp.initDataUnsafe;
+        console.log('User Data:', user); // Debugging line to check user data
 
-    // Display the username
-    document.getElementById('username').textContent = username;
+        const userId = user?.user?.id;
+        const username = user?.user?.username || "Username";
 
-    // Fetch user-specific data from your server
-    fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
-        .then(response => response.json())
-        .then(data => {
-            const points = data.points || 0;
-            const tasksDone = data.tasksDone || 0;
+        // Display the username
+        document.getElementById('username').textContent = username;
 
-            document.getElementById('points').textContent = points;
-            document.getElementById('tasksDone').textContent = tasksDone;
-        });
+        // Fetch user-specific data from your server
+        fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                const points = data.points || 0;
+                const tasksDone = data.tasksDone || 0;
 
-    // Handle task completion
-    document.querySelectorAll('.complete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const taskId = this.getAttribute('data-task');
-            const taskElement = document.getElementById(taskId);
-
-            if (!taskElement.classList.contains('completed')) {
-                // Update task status
-                let points = parseInt(document.getElementById('points').textContent);
-                let tasksDone = parseInt(document.getElementById('tasksDone').textContent);
-
-                points += 10;
-                tasksDone += 1;
-                taskElement.classList.add('completed');
-                this.textContent = 'Completed';
                 document.getElementById('points').textContent = points;
                 document.getElementById('tasksDone').textContent = tasksDone;
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+            });
 
-                // Send updated data to server
-                sendDataToServer(userId, points, tasksDone);
-            }
+        // Handle task completion
+        document.querySelectorAll('.complete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const taskId = this.getAttribute('data-task');
+                const taskElement = document.getElementById(taskId);
+
+                if (!taskElement.classList.contains('completed')) {
+                    // Update task status
+                    let points = parseInt(document.getElementById('points').textContent);
+                    let tasksDone = parseInt(document.getElementById('tasksDone').textContent);
+
+                    points += 10;
+                    tasksDone += 1;
+                    taskElement.classList.add('completed');
+                    this.textContent = 'Completed';
+                    document.getElementById('points').textContent = points;
+                    document.getElementById('tasksDone').textContent = tasksDone;
+
+                    // Send updated data to server
+                    sendDataToServer(userId, points, tasksDone);
+                }
+            });
         });
-    });
+    } else {
+        console.error('Telegram WebApp is not available');
+    }
 };
 
 function sendDataToServer(userId, points, tasksDone) {
@@ -50,5 +58,8 @@ function sendDataToServer(userId, points, tasksDone) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, points, tasksDone })
-    });
+    })
+    .then(response => response.json())
+    .then(data => console.log('Data successfully sent:', data))
+    .catch(error => console.error('Error sending data:', error));
 }
