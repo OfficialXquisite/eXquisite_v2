@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GrooveTunes</title>
-  <link rel="stylesheet" href="assets/styles/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrooveTunes</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="/index.js"></script>
+    <div class="custom-audio-player">
+        <img src="assets/album-art.jpg" alt="Album Art" class="album-art">
+        <div class="controls">
+            <button id="skip-previous">⏮️</button>
+            <button id="rewind">⏪</button>
+            <button id="play-pause">▶️</button>
+            <button id="fast-forward">⏩</button>
+            <button id="skip-next">⏭️</button>
+        </div>
+        <div class="progress-container">
+            <input type="range" id="progress-bar" value="0" max="100">
+            <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+        </div>
+        <audio id="audio" controls style="display: none;">
+            <source src="audio/example.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
