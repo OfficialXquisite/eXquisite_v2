@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Web App</title>
+    <title>Telegram Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
-<body style="background-color: #2c003e; color: white;">
-    <h1 id="welcomeMessage">Welcome, User!</h1>
-    <p>Points: <span id="userPoints">0</span></p>
-
-    <div id="tasks">
-        <!-- Task items will be added here based on user data -->
-        <div class="task" id="task-1">
-            <p>Task: Comment on a Twitter post</p>
-            <input type="text" id="task1Link" placeholder="Enter link to your comment">
-            <button onclick="submitTask('task-1', 'task1Link')">Submit</button>
-        </div>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to your dashboard!</h1>
+            <div class="profile">
+                <img id="profilePic" class="profile-pic" src="" alt="Profile Picture">
+                <div id="userName" class="profile-name">Welcome, Username</div>
+            </div>
+        </header>
+        <main>
+            <div class="stats">
+                <div class="points">Points: <span id="points">0</span></div>
+            </div>
+            <div class="tasks">
+                <h2>Available Tasks</h2>
+                <div class="task" id="task1">
+                    <span>Task 1: Comment on Twitter</span>
+                    <input type="text" placeholder="Paste link here" id="taskLink1">
+                    <button class="submit-btn" data-task="task1">Submit</button>
+                    <span class="task-status" id="status1">Pending</span>
+                </div>
+                <!-- Additional tasks can be added here following the same structure -->
+            </div>
+        </main>
+        <footer>
+            <p>Powered by Telegram Web Apps</p>
+        </footer>
+        <script src="app.js"></script>
     </div>
-
-    <script src="app.js"></script>
 </body>
 </html>
