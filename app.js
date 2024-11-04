@@ -1,3 +1,8 @@
+// Import Firebase libraries if needed (e.g., Firebase app, Firestore)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+// Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD4DVbIQUzhNSczujsP27MwTE6NfifB8ew",
@@ -9,59 +14,67 @@ const firebaseConfig = {
   appId: "1:553030063178:web:13e2b89fd5c6c628ccc2b3",
   measurementId: "G-KZ89FN869W"
 };
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// Initialize Telegram Web App
-Telegram.WebApp.ready();
+window.onload = function () {
+    if (window.Telegram && window.Telegram.WebApp) {
+        const user = window.Telegram.WebApp.initDataUnsafe.user;
+        const userId = user?.id;
+        const username = user?.username || "Username";
 
-// Get Telegram user information
-const telegramUser = Telegram.WebApp.initDataUnsafe.user;
+        document.getElementById("userName").textContent = `Welcome, ${username}`;
 
-if (telegramUser) {
-    const userId = telegramUser.id;
-    const username = telegramUser.username;
+        if (userId) {
+            const userRef = doc(db, "users", userId);
 
-    // Display personalized welcome message
-    document.getElementById("welcomeMessage").innerText = `Welcome, ${username}!`;
-
-    // Retrieve or create user profile in Firebase Firestore
-    const userRef = db.collection("users").doc(userId.toString());
-
-    userRef.get().then((doc) => {
-        if (doc.exists) {
-            const userData = doc.data();
-            document.getElementById("userPoints").innerText = userData.points || 0;
-        } else {
-            // Create a new user profile if it doesn't exist
-            userRef.set({
-                username: username,
-                points: 0,
-                tasks: {
-                    "task-1": { status: "Pending", link: "" }
+            // Fetch user data
+            getDoc(userRef).then((docSnap) => {
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    document.getElementById("points").textContent = userData.points || 0;
+                } else {
+                    // If no user data, initialize with zero points
+                    setDoc(userRef, { points: 0 });
                 }
             });
+
+            // Handle task submission
+            document.querySelectorAll(".submit-btn").forEach((button) => {
+                button.addEventListener("click", async function () {
+                    const taskId = this.getAttribute("data-task");
+                    const taskLinkInput = document.getElementById(`taskLink${taskId.slice(-1)}`);
+                    const taskStatus = document.getElementById(`status${taskId.slice(-1)}`);
+
+                    const link = taskLinkInput.value;
+                    if (link) {
+                        const taskData = { link, status: "On review" };
+                        await setDoc(doc(userRef, "tasks", taskId), taskData);
+
+                        // Update UI
+                        taskStatus.textContent = "On review";
+                        button.disabled = true;
+
+                        taskLinkInput.value = ""; // Clear input
+                    }
+                });
+            });
         }
-    }).catch((error) => {
-        console.error("Error getting user data:", error);
-    });
-}
+    } else {
+        console.error("Telegram WebApp is not available");
+    }
+};
 
-// Function to handle task submission
-function submitTask(taskId, inputId) {
-    const taskLink = document.getElementById(inputId).value;
-    const userRef = db.collection("users").doc(telegramUser.id.toString());
+// Function to update points from Firebase (e.g., when status changes to "Done")
+async function updatePoints(userId, additionalPoints) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
 
-    if (taskLink) {
-        userRef.update({
-            [`tasks.${taskId}.link`]: taskLink,
-            [`tasks.${taskId}.status`]: "On review"
-        }).then(() => {
-            document.getElementById(inputId).disabled = true;
-            document.querySelector(`#${taskId} button`).innerText = "On review";
-        }).catch((error) => {
-            console.error("Error updating task:", error);
-        });
+    if (userSnap.exists()) {
+        const currentPoints = userSnap.data().points || 0;
+        await updateDoc(userRef, { points: currentPoints + additionalPoints });
+        document.getElementById("points").textContent = currentPoints + additionalPoints;
     }
 }
