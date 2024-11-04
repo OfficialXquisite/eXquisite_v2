@@ -22,8 +22,8 @@ const db = getFirestore(app);
 window.onload = function () {
     if (window.Telegram && window.Telegram.WebApp) {
         const user = window.Telegram.WebApp.initDataUnsafe.user;
-        const userId = user?.id;
-        const username = user?.username || "Username";
+        // const userId = user?.id;
+        // const username = user?.username || "Username";
       
         const userId = user?.user?.id;
         const username = user?.user?.username || "Username";
