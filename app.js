@@ -1,4 +1,3 @@
-// Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD4DVbIQUzhNSczujsP27MwTE6NfifB8ew",
@@ -10,7 +9,6 @@ const firebaseConfig = {
   appId: "1:553030063178:web:13e2b89fd5c6c628ccc2b3",
   measurementId: "G-KZ89FN869W"
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -25,7 +23,7 @@ if (telegramUser) {
     const userId = telegramUser.id;
     const username = telegramUser.username;
 
-    // Display welcome message
+    // Display personalized welcome message
     document.getElementById("welcomeMessage").innerText = `Welcome, ${username}!`;
 
     // Retrieve or create user profile in Firebase Firestore
