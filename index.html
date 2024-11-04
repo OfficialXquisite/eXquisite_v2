@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrooveTunes</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
-<body>
-    <div class="custom-audio-player">
-        <img src="assets/album-art.jpg" alt="Album Art" class="album-art">
-        <div class="controls">
-            <button id="skip-previous">⏮️</button>
-            <button id="rewind">⏪</button>
-            <button id="play-pause">▶️</button>
-            <button id="fast-forward">⏩</button>
-            <button id="skip-next">⏭️</button>
+<body style="background-color: #2c003e; color: white;">
+    <h1 id="welcomeMessage">Welcome, User!</h1>
+    <p>Points: <span id="userPoints">0</span></p>
+
+    <div id="tasks">
+        <!-- Task items will be added here based on user data -->
+        <div class="task" id="task-1">
+            <p>Task: Comment on a Twitter post</p>
+            <input type="text" id="task1Link" placeholder="Enter link to your comment">
+            <button onclick="submitTask('task-1', 'task1Link')">Submit</button>
         </div>
-        <div class="progress-container">
-            <input type="range" id="progress-bar" value="0" max="100">
-            <span id="current-time">0:00</span> / <span id="duration">0:00</span>
-        </div>
-        <audio id="audio" controls style="display: none;">
-            <source src="audio/example.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
     </div>
-    <script src="scripts/main.js"></script>
+
+    <script src="app.js"></script>
 </body>
 </html>
