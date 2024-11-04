@@ -1,26 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Web App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-</head>
-<body style="background-color: #2c003e; color: white;">
-    <h1 id="welcomeMessage">Welcome, User!</h1>
-    <p>Points: <span id="userPoints">0</span></p>
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-    <div id="tasks">
-        <!-- Task items will be added here based on user data -->
-        <div class="task" id="task-1">
-            <p>Task: Comment on a Twitter post</p>
-            <input type="text" id="task1Link" placeholder="Enter link to your comment">
-            <button onclick="submitTask('task-1', 'task1Link')">Submit</button>
-        </div>
-    </div>
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-    <script src="app.js"></script>
-</body>
-</html>
+// Initialize Telegram Web App
+Telegram.WebApp.ready();
+
+// Get Telegram user information
+const telegramUser = Telegram.WebApp.initDataUnsafe.user;
+
+if (telegramUser) {
+    const userId = telegramUser.id;
+    const username = telegramUser.username;
+
+    // Display personalized welcome message
+    document.getElementById("welcomeMessage").innerText = `Welcome, ${username}!`;
+
+    // Retrieve or create user profile in Firebase Firestore
+    const userRef = db.collection("users").doc(userId.toString());
+
+    userRef.get().then((doc) => {
+        if (doc.exists) {
+            const userData = doc.data();
+            document.getElementById("userPoints").innerText = userData.points || 0;
+        } else {
+            // Create a new user profile if it doesn't exist
+            userRef.set({
+                username: username,
+                points: 0,
+                tasks: {
+                    "task-1": { status: "Pending", link: "" }
+                }
+            });
+        }
+    }).catch((error) => {
+        console.error("Error getting user data:", error);
+    });
+}
+
+// Function to handle task submission
+function submitTask(taskId, inputId) {
+    const taskLink = document.getElementById(inputId).value;
+    const userRef = db.collection("users").doc(telegramUser.id.toString());
+
+    if (taskLink) {
+        userRef.update({
+            [`tasks.${taskId}.link`]: taskLink,
+            [`tasks.${taskId}.status`]: "On review"
+        }).then(() => {
+            document.getElementById(inputId).disabled = true;
+            document.querySelector(`#${taskId} button`).innerText = "On review";
+        }).catch((error) => {
+            console.error("Error updating task:", error);
+        });
+    }
+}
