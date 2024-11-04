@@ -10,7 +10,7 @@ window.onload = function() {
         const username = user?.user?.username || "Username";
 
         // Display the username
-        document.getElementById('username').textContent = username;
+        document.getElementById('userName').textContent = username;
 
         // Fetch user-specific data from your server
         if (userId) {
