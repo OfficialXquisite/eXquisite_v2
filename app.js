@@ -24,8 +24,11 @@ window.onload = function () {
         const user = window.Telegram.WebApp.initDataUnsafe.user;
         const userId = user?.id;
         const username = user?.username || "Username";
+      
+        const userId = user?.user?.id;
+        const username = user?.user?.username || "Username";
 
-        document.getElementById("userName").textContent = `Welcome, ${username}`;
+        document.getElementById("userName").textContent = `${username}`;
 
         if (userId) {
             const userRef = doc(db, "users", userId);
