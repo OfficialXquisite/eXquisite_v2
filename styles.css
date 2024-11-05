@@ -68,3 +68,12 @@ input[type="text"] {
     font-size: 14px;
     color: #ffcb6b;
 }
+
+.task-status.on-review {
+    color: #FFA500; /* Orange for "On review" */
+}
+
+.task-status.done {
+    color: #32CD32; /* Green for "Done" */
+}
+
