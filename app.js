@@ -1,53 +1,36 @@
-window.onload = function() {
-    // Ensure Telegram WebApp is available and initialized
-    if (window.Telegram && window.Telegram.WebApp) {
-        const webApp = window.Telegram.WebApp;
-        const user = webApp.initDataUnsafe?.user;
+            button.addEventListener('click', function() {
+                const taskId = this.getAttribute('data-task');
+                const taskElement = document.getElementById(taskId);
 
-        // Check if we have user data
-        if (user && user.username) {
-            // Extract user details
-            const userId = user.id;
-            const username = user.username;
-            const firstName = user.first_name || "User";
-            const profilePicUrl = user.photo_url;
+                if (!taskElement.classList.contains('completed')) {
+                    // Update task status
+                    let points = parseInt(document.getElementById('points').textContent);
+                    let tasksDone = parseInt(document.getElementById('tasksDone').textContent);
 
-            // Display the username and profile photo if available
-            document.getElementById('userName').textContent = `Welcome, ${username || firstName}!`;
-            if (profilePicUrl) {
-                document.getElementById('profilePic').src = profilePicUrl;
-            }
+                    points += 10;
+                    tasksDone += 1;
+                    taskElement.classList.add('completed');
+                    this.textContent = 'Completed';
+                    document.getElementById('points').textContent = points;
+                    document.getElementById('tasksDone').textContent = tasksDone;
 
-            // Fetch user-specific data from Firebase or your server
-            fetchUserData(userId);
-        } else {
-            console.error('User data is not available or incomplete.');
-            document.getElementById('userName').textContent = "Welcome, User!";
-        }
+                    // Send updated data to server
+                    if (userId) {
+                        sendDataToServer(userId, points, tasksDone);
+                    }
+                }
+            });
+        });
     } else {
-        console.error('Telegram WebApp SDK is not available.');
+        console.error('Telegram WebApp is not available');
     }
 };
 
-// Function to fetch user-specific data from your server or Firebase
-function fetchUserData(userId) {
-    fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
-        .then(response => response.json())
-        .then(data => {
-            const points = data.points || 0;
-            document.getElementById('points').textContent = points;
-        })
-        .catch(error => {
-            console.error('Error fetching user data:', error);
-        });
-}
-
-// Optional: Function to send data updates back to your server or Firebase
-function sendDataToServer(userId, points) {
+function sendDataToServer(userId, points, tasksDone) {
     fetch('https://exquisitev2.urbanson.tech/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, points })
+        body: JSON.stringify({ userId, points, tasksDone })
     })
     .then(response => response.json())
     .then(data => console.log('Data successfully sent:', data))
