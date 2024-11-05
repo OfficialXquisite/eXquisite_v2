@@ -1,82 +1,58 @@
-window.onload = function () {
+window.onload = function() {
+    // Check if Telegram WebApp is available
     if (window.Telegram && window.Telegram.WebApp) {
-        const user = window.Telegram.WebApp.initDataUnsafe.user;
-        // const userId = user?.id;
-        // const username = user?.username || "Username";
-      
-        const userId = user?.user?.id;
-        const username = user?.user?.username || "Username";
+        // Initialize the Telegram WebApp and retrieve user data
+        const webApp = window.Telegram.WebApp;
+        const user = webApp.initDataUnsafe.user;
 
-        document.getElementById("userName").textContent = `${username}`;
+        // Check if we have user data
+        if (user) {
+            const userId = user.id;
+            const username = user.username || user.first_name || "User";
 
-        if (userId) {
-            const userRef = doc(db, "users", userId);
+            // Display the username and profile photo if available
+            document.getElementById('userName').textContent = `Welcome, ${username}!`;
+            if (user.photo_url) {
+                document.getElementById('profilePic').src = user.photo_url;
+            }
 
-            // Fetch user data
-            getDoc(userRef).then((docSnap) => {
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    document.getElementById("points").textContent = userData.points || 0;
-                } else {
-                    // If no user data, initialize with zero points
-                    setDoc(userRef, { points: 0 });
-                }
-            });
+            // Fetch user-specific data from Firebase or your server
+            if (userId) {
+                fetchUserData(userId);
+            }
 
-            // Handle task submission
-            document.querySelectorAll(".submit-btn").forEach((button) => {
-                button.addEventListener("click", async function () {
-                    const taskId = this.getAttribute("data-task");
-                    const taskLinkInput = document.getElementById(`taskLink${taskId.slice(-1)}`);
-                    const taskStatus = document.getElementById(`status${taskId.slice(-1)}`);
-
-                    const link = taskLinkInput.value;
-                    if (link) {
-                        const taskData = { link, status: "On review" };
-                        await setDoc(doc(userRef, "tasks", taskId), taskData);
-
-                        // Update UI
-                        taskStatus.textContent = "On review";
-                        button.disabled = true;
-
-                        taskLinkInput.value = ""; // Clear input
-                    }
-                });
-            });
+        } else {
+            console.error('User data is not available.');
         }
     } else {
-        console.error("Telegram WebApp is not available");
+        console.error('Telegram WebApp is not available.');
     }
 };
-// Import Firebase libraries if needed (e.g., Firebase app, Firestore)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-// Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyD4DVbIQUzhNSczujsP27MwTE6NfifB8ew",
-  authDomain: "promote-pro-8f9aa.firebaseapp.com",
-  databaseURL: "https://promote-pro-8f9aa-default-rtdb.firebaseio.com",
-  projectId: "promote-pro-8f9aa",
-  storageBucket: "promote-pro-8f9aa.firebasestorage.app",
-  messagingSenderId: "553030063178",
-  appId: "1:553030063178:web:13e2b89fd5c6c628ccc2b3",
-  measurementId: "G-KZ89FN869W"
-};
+// Function to fetch user-specific data from your server or Firebase
+function fetchUserData(userId) {
+    fetch(`https://exquisitev2.urbanson.tech/data/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const points = data.points || 0;
+            const tasksDone = data.tasksDone || 0;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+            document.getElementById('points').textContent = points;
+            document.getElementById('tasksDone').textContent = tasksDone;
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+        });
+}
 
-// Function to update points from Firebase (e.g., when status changes to "Done")
-async function updatePoints(userId, additionalPoints) {
-    const userRef = doc(db, "users", userId);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
-        const currentPoints = userSnap.data().points || 0;
-        await updateDoc(userRef, { points: currentPoints + additionalPoints });
-        document.getElementById("points").textContent = currentPoints + additionalPoints;
-    }
+// Optional: Function to send data updates back to your server or Firebase
+function sendDataToServer(userId, points, tasksDone) {
+    fetch('https://exquisitev2.urbanson.tech/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, points, tasksDone })
+    })
+    .then(response => response.json())
+    .then(data => console.log('Data successfully sent:', data))
+    .catch(error => console.error('Error sending data:', error));
 }
