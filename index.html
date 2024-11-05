@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -11,22 +19,16 @@
         <main>
             <div class="stats">
                 <div class="points">Points: <span id="points">0</span></div>
-                <div class="tasks-done">Tasks Done: <span id="tasksDone">0</span></div>
             </div>
             <div class="tasks">
                 <h2>Available Tasks</h2>
                 <div class="task" id="task1">
-                    <span>Task 1</span>
-                    <button class="complete-btn" data-task="task1">Complete</button>
+                    <span>Task 1: Comment on Twitter</span>
+                    <input type="text" placeholder="Paste link here" id="taskLink1">
+                    <button class="submit-btn" data-task="task1">Submit</button>
+                    <span class="task-status" id="status1">Pending</span>
                 </div>
-                <div class="task" id="task2">
-                    <span>Task 2</span>
-                    <button class="complete-btn" data-task="task2">Complete</button>
-                </div>
-                <div class="task" id="task3">
-                    <span>Task 3</span>
-                    <button class="complete-btn" data-task="task3">Complete</button>
-                </div>
+                <!-- Additional tasks can be added here following the same structure -->
             </div>
         </main>
         <footer>
